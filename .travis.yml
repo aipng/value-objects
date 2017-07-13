@@ -11,10 +11,6 @@ php:
 
 matrix:
   fast_finish: true
-  include:
-    - env: COMPOSER_EXTRA_ARGS="--prefer-stable" COVERAGE="--coverage ./coverage.xml --coverage-src ./src" TESTER_RUNTIME="phpdbg"
-  allow_failures:
-    - env:
 
 before_install:
   - composer self-update
@@ -24,7 +20,8 @@ install:
 
 script:
   - ./vendor/bin/tester -s ./tests/
-  - php vendor/bin/phpcs
+  - ./vendor/bin/phpcs
+  - ./vendor/bin/phpstan analyze -l 5 ./src/
 
 after_failure:
   # Vytiskne obsah souborů *.actual
