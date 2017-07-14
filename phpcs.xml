@@ -20,31 +20,4 @@
 		</properties>
 	</rule>
 
-	<rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
-		<properties>
-			<property name="usefulAnnotations" type="array" value="
-				@throws,
-				@dataProvider,
-			" />
-		</properties>
-	</rule>
-
-	<rule ref="SlevomatCodingStandard.Namespaces">
-		<exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces" />
-	</rule>
-
-	<rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword">
-		<properties>
-			<property name="keywordsToCheck" type="array" value="
-					T_IMPLEMENTS,
-				" />
-		</properties>
-	</rule>
-
-	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
-		<properties>
-			<property name="allowFullyQualifiedGlobalClasses" type="boolean" value="true" />
-		</properties>
-	</rule>
-
 </ruleset>
