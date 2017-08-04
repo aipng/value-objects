@@ -31,7 +31,6 @@
 		"nette/utils": "^2.4.0"
 	},
 	"require-dev": {
-		"aipng/coding-standard": "~0.1",
 		"doctrine/dbal": "~2.5.1",
 		"nette/tester": "^1.7.1"
 	},

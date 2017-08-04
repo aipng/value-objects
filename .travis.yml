@@ -18,10 +18,11 @@ before_install:
 install:
   - composer install --no-interaction --no-suggest --no-progress
   - composer create-project phpstan/phpstan temp/phpstan --no-dev
+  - composer create-project aipng/coding-standard temp/coding-standard
 
 script:
   - ./vendor/bin/tester -s ./tests/
-  - ./vendor/bin/phpcs
+  - temp/coding-standard/phpcs ./src ./tests
   - temp/phpstan/bin/phpstan analyze -l 7 ./src/
 
 after_failure:
