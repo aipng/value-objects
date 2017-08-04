@@ -33,8 +33,7 @@
 	"require-dev": {
 		"aipng/coding-standard": "~0.1",
 		"doctrine/dbal": "~2.5.1",
-		"nette/tester": "~1.7.1",
-		"phpstan/phpstan": "~0.6.4"
+		"nette/tester": "^1.7.1"
 	},
 	"suggest": {
 		"doctrine/dbal": "Needed to support custom Doctrine DBAL types"
