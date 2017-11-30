@@ -67,7 +67,7 @@ final class StringNormalizerTest extends TestCase
 
 	public function testNormalizeMandatoryThrowExceptionOnEmptyString(): void
 	{
-		Assert::exception(function () {
+		Assert::exception(function (): void {
 			StringNormalizer::normalizeMandatory('');
 		}, \AipNg\ValueObjects\InvalidArgumentException::class);
 	}

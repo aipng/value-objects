@@ -6,10 +6,14 @@ namespace AipNg\Tests\ValueObjects\Web;
 
 require __DIR__ . '/../../bootstrap.php';
 
+use AipNg\ValueObjects\InvalidArgumentException;
 use AipNg\ValueObjects\Web\Email;
 use Tester\Assert;
 use Tester\TestCase;
 
+/**
+ * @phpExtension mbstring
+ */
 final class EmailTest extends TestCase
 {
 
@@ -27,10 +31,10 @@ final class EmailTest extends TestCase
 	public function testThrowExceptionOnInvalidEmail(): void
 	{
 		Assert::exception(
-			function () {
+			function (): void {
 				new Email('');
 			},
-			\AipNg\ValueObjects\InvalidArgumentException::class
+			InvalidArgumentException::class
 		);
 	}
 

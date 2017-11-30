@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace AipNg\ValueObjects\Web;
 
 use AipNg\ValueObjects\Helpers\StringNormalizer;
+use AipNg\ValueObjects\InvalidArgumentException;
 use Nette\Utils\Strings;
 use Nette\Utils\Validators;
 
@@ -16,8 +17,6 @@ final class Email
 
 
 	/**
-	 * @param string $value
-	 *
 	 * @throws \AipNg\ValueObjects\InvalidArgumentException
 	 */
 	public function __construct(string $value)
@@ -25,7 +24,7 @@ final class Email
 		$value = StringNormalizer::normalizeMandatory($value);
 
 		if (!Validators::isEmail($value)) {
-			throw new \AipNg\ValueObjects\InvalidArgumentException(
+			throw new InvalidArgumentException(
 				sprintf("'%s' is not a valid e-mail address!", $value)
 			);
 		}

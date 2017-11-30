@@ -2,7 +2,9 @@
 	"name": "aipng/value-objects",
 	"type": "library",
 	"description": "Common value objects",
-	"keywords": ["value objects"],
+	"keywords": [
+		"value objects"
+	],
 	"license": "BSD",
 	"minimum-stability": "stable",
 	"authors": [
@@ -13,26 +15,19 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"AipNg\\ValueObjects\\": [
-				"src/"
-			]
+			"AipNg\\ValueObjects\\": "src/"
 		},
 		"classmap": [
 			"src/Exceptions/"
 		]
 	},
-	"autoload-dev": {
-		"classmap": [
-			"tests/src/"
-		]
-	},
 	"require": {
 		"php": ">= 7.1",
-		"nette/utils": "^2.4.0"
+		"nette/utils": "^2.4"
 	},
 	"require-dev": {
-		"doctrine/dbal": "~2.5.1",
-		"nette/tester": "^1.7.1"
+		"doctrine/dbal": "~2.5",
+		"nette/tester": "^2.0"
 	},
 	"suggest": {
 		"doctrine/dbal": "Needed to support custom Doctrine DBAL types"

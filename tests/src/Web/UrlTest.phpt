@@ -6,10 +6,14 @@ namespace AipNg\Tests\ValueObjects\Web;
 
 require __DIR__ . '/../../bootstrap.php';
 
+use AipNg\ValueObjects\InvalidArgumentException;
 use AipNg\ValueObjects\Web\Url;
 use Tester\Assert;
 use Tester\TestCase;
 
+/**
+ * @phpExtension mbstring
+ */
 final class UrlTest extends TestCase
 {
 
@@ -33,8 +37,6 @@ final class UrlTest extends TestCase
 
 
 	/**
-	 * @param string $url
-	 *
 	 * @dataProvider getNormalizeUrlTestData
 	 */
 	public function testNormalizeUrl(string $url): void
@@ -46,10 +48,10 @@ final class UrlTest extends TestCase
 	public function testThrowExceptionOnInvalidUrl(): void
 	{
 		Assert::exception(
-			function () {
+			function (): void {
 				new Url('');
 			},
-			\AipNg\ValueObjects\InvalidArgumentException::class
+			InvalidArgumentException::class
 		);
 	}
 
