@@ -8,11 +8,11 @@ final class StringNormalizer
 {
 
 	/**
-	 * Normalizes empty strings in input to NULL value
+	 * Normalizes empty strings in input to null value
 	 *
 	 * @param mixed $value
 	 *
-	 * @return mixed|NULL
+	 * @return mixed|null
 	 */
 	public static function normalize($value)
 	{
@@ -67,7 +67,7 @@ final class StringNormalizer
 
 	private static function normalizeString(string $string): ?string
 	{
-		return trim($string) ?: NULL;
+		return trim($string) ?: null;
 	}
 
 }

@@ -15,7 +15,7 @@ final class StringNormalizerTest extends TestCase
 
 	public function testNormalizeEmptyStrings(): void
 	{
-		Assert::null(StringNormalizer::normalize(NULL));
+		Assert::null(StringNormalizer::normalize(null));
 		Assert::null(StringNormalizer::normalize(''));
 		Assert::null(StringNormalizer::normalize('   '));
 	}
@@ -32,8 +32,8 @@ final class StringNormalizerTest extends TestCase
 		Assert::same(1, StringNormalizer::normalize(1));
 		Assert::same(0, StringNormalizer::normalize(0));
 		Assert::same('string', StringNormalizer::normalize('string'));
-		Assert::same(TRUE, StringNormalizer::normalize(TRUE));
-		Assert::same(FALSE, StringNormalizer::normalize(FALSE));
+		Assert::same(true, StringNormalizer::normalize(true));
+		Assert::same(false, StringNormalizer::normalize(false));
 	}
 
 
@@ -41,7 +41,7 @@ final class StringNormalizerTest extends TestCase
 	{
 		Assert::same([], StringNormalizer::normalize([]));
 		Assert::same([''], StringNormalizer::normalize(['']));
-		Assert::same([TRUE], StringNormalizer::normalize([TRUE]));
+		Assert::same([true], StringNormalizer::normalize([true]));
 	}
 
 
@@ -54,8 +54,8 @@ final class StringNormalizerTest extends TestCase
 
 	public function testRecursiveNormalization(): void
 	{
-		Assert::same([NULL], StringNormalizer::normalizeRecursive(['']));
-		Assert::same([[NULL]], StringNormalizer::normalizeRecursive([[' ']]));
+		Assert::same([null], StringNormalizer::normalizeRecursive(['']));
+		Assert::same([[null]], StringNormalizer::normalizeRecursive([[' ']]));
 	}
 
 
