@@ -27,7 +27,7 @@
 	},
 	"require-dev": {
 		"doctrine/dbal": "~2.5",
-		"nette/tester": "^2.0"
+		"phpunit/phpunit": "^6.5"
 	},
 	"suggest": {
 		"doctrine/dbal": "Needed to support custom Doctrine DBAL types"

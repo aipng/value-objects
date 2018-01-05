@@ -4,16 +4,10 @@ declare(strict_types = 1);
 
 namespace AipNg\Tests\ValueObjects\Web;
 
-require __DIR__ . '/../../bootstrap.php';
-
 use AipNg\ValueObjects\InvalidArgumentException;
 use AipNg\ValueObjects\Web\Url;
-use Tester\Assert;
-use Tester\TestCase;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @phpExtension mbstring
- */
 final class UrlTest extends TestCase
 {
 
@@ -24,7 +18,7 @@ final class UrlTest extends TestCase
 	{
 		$url = new Url(self::URL);
 
-		Assert::same(self::URL, $url->getValue());
+		$this->assertSame(self::URL, $url->getValue());
 	}
 
 
@@ -32,7 +26,7 @@ final class UrlTest extends TestCase
 	{
 		$url = new Url(self::URL);
 
-		Assert::same(self::URL, (string) $url);
+		$this->assertSame(self::URL, (string) $url);
 	}
 
 
@@ -41,18 +35,15 @@ final class UrlTest extends TestCase
 	 */
 	public function testNormalizeUrl(string $url): void
 	{
-		Assert::same(self::URL, (new Url($url))->getValue());
+		$this->assertSame(self::URL, (new Url($url))->getValue());
 	}
 
 
 	public function testThrowExceptionOnInvalidUrl(): void
 	{
-		Assert::exception(
-			function (): void {
-				new Url('');
-			},
-			InvalidArgumentException::class
-		);
+		$this->expectException(InvalidArgumentException::class);
+
+		new Url('');
 	}
 
 
@@ -69,6 +60,3 @@ final class UrlTest extends TestCase
 	}
 
 }
-
-
-(new UrlTest)->run();

@@ -22,7 +22,7 @@ install:
   - composer create-project aipng/coding-standard temp/coding-standard --no-progress
 
 script:
-  - ./vendor/bin/tester -s ./tests/
+  - ./vendor/bin/phpunit ./tests/
   - temp/coding-standard/phpcs ./src ./tests
   - temp/phpstan/bin/phpstan analyze -l max ./src/
 
