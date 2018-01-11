@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace AipNg\Tests\ValueObjects\Web;
+namespace AipNg\ValueObjectsTests\Web;
 
 use AipNg\ValueObjects\InvalidArgumentException;
 use AipNg\ValueObjects\Web\Url;

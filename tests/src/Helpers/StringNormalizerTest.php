@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace AipNg\Tests\ValueObjects\Helpers;
+namespace AipNg\ValueObjectsTests\Helpers;
 
 use AipNg\ValueObjects\Helpers\StringNormalizer;
 use AipNg\ValueObjects\InvalidArgumentException;
