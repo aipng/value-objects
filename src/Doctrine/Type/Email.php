@@ -52,8 +52,12 @@ final class Email extends Type
 	 *
 	 * @throws \AipNg\ValueObjects\InvalidArgumentException
 	 */
-	public function convertToPHPValue($value, AbstractPlatform $platform): EmailObject
+	public function convertToPHPValue($value, AbstractPlatform $platform): ?EmailObject
 	{
+		if (!$value) {
+			return null;
+		}
+
 		return new EmailObject($value);
 	}
 

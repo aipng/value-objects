@@ -52,8 +52,12 @@ final class Url extends Type
 	 *
 	 * @throws \AipNg\ValueObjects\InvalidArgumentException
 	 */
-	public function convertToPHPValue($value, AbstractPlatform $platform): UrlObject
+	public function convertToPHPValue($value, AbstractPlatform $platform): ?UrlObject
 	{
+		if (!$value) {
+			return null;
+		}
+
 		return new UrlObject($value);
 	}
 
