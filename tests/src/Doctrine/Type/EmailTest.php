@@ -16,7 +16,7 @@ final class EmailTest extends TestCase
 	private $platform;
 
 	/** @var \AipNg\ValueObjects\Doctrine\Type\Email */
-	private $urlDatabaseType;
+	private $emailDatabaseType;
 
 
 	protected function setUp(): void
@@ -28,13 +28,13 @@ final class EmailTest extends TestCase
 			EmailType::addType('email', EmailType::class);
 		}
 
-		$this->urlDatabaseType = EmailType::getType('email');
+		$this->emailDatabaseType = EmailType::getType('email');
 	}
 
 
 	public function testConvertNullToPHPValue(): void
 	{
-		$phpValue = $this->urlDatabaseType->convertToPHPValue(null, $this->platform);
+		$phpValue = $this->emailDatabaseType->convertToPHPValue(null, $this->platform);
 
 		$this->assertSame(null, $phpValue);
 	}
@@ -42,12 +42,12 @@ final class EmailTest extends TestCase
 
 	public function testConvertEmailToPHPValue(): void
 	{
-		$textUrl = 'test@example.org';
+		$textEmail = 'test@example.org';
 
-		$emailObject = $this->urlDatabaseType->convertToPHPValue($textUrl, $this->platform);
+		$emailObject = $this->emailDatabaseType->convertToPHPValue($textEmail, $this->platform);
 
 		$this->assertInstanceOf(Email::class, $emailObject);
-		$this->assertSame($textUrl, $emailObject->getValue());
+		$this->assertSame($textEmail, $emailObject->getValue());
 	}
 
 }
