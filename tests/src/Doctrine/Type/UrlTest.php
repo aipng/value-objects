@@ -12,6 +12,8 @@ use PHPUnit\Framework\TestCase;
 final class UrlTest extends TestCase
 {
 
+	private const URL = 'http://example.org';
+
 	/** @var \Mockery\MockInterface|\Doctrine\DBAL\Platforms\AbstractPlatform */
 	private $platform;
 
@@ -32,6 +34,22 @@ final class UrlTest extends TestCase
 	}
 
 
+	public function testConvertToDatabaseValue(): void
+	{
+		$url = new Url(self::URL);
+
+		$databaseValue = $this->urlDatabaseType->convertToDatabaseValue($url, $this->platform);
+
+		$this->assertSame($url->getValue(), $databaseValue);
+	}
+
+
+	public function testConvertNullToDatabaseValue(): void
+	{
+		$this->assertNull($this->urlDatabaseType->convertToDatabaseValue(null, $this->platform));
+	}
+
+
 	public function testConvertNullToPHPValue(): void
 	{
 		$phpValue = $this->urlDatabaseType->convertToPHPValue(null, $this->platform);
@@ -42,12 +60,22 @@ final class UrlTest extends TestCase
 
 	public function testConvertUrlToPHPValue(): void
 	{
-		$textUrl = 'http://www.example.org';
+		$textUrl = self::URL;
 
 		$urlObject = $this->urlDatabaseType->convertToPHPValue($textUrl, $this->platform);
 
 		$this->assertInstanceOf(Url::class, $urlObject);
 		$this->assertSame($textUrl, $urlObject->getValue());
+	}
+
+
+	public function testConvertInstanceToPHPValue(): void
+	{
+		$url = new Url(self::URL);
+
+		$urlObject = $this->urlDatabaseType->convertToPHPValue($url, $this->platform);
+
+		$this->assertSame($url, $urlObject);
 	}
 
 }

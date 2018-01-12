@@ -38,9 +38,9 @@ final class Email extends Type
 	 *
 	 * @return string
 	 */
-	public function convertToDatabaseValue($value, AbstractPlatform $platform): string
+	public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
 	{
-		return $value->getValue();
+		return $value ? $value->getValue() : null;
 	}
 
 
@@ -54,11 +54,11 @@ final class Email extends Type
 	 */
 	public function convertToPHPValue($value, AbstractPlatform $platform): ?EmailObject
 	{
-		if (!$value) {
-			return null;
+		if ($value instanceof EmailObject) {
+			return $value;
 		}
 
-		return new EmailObject($value);
+		return $value ? new EmailObject($value) : null;
 	}
 
 }

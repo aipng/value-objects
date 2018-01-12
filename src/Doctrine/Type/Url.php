@@ -38,9 +38,9 @@ final class Url extends Type
 	 *
 	 * @return string
 	 */
-	public function convertToDatabaseValue($value, AbstractPlatform $platform): string
+	public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
 	{
-		return $value->getValue();
+		return $value ? $value->getValue() : null;
 	}
 
 
@@ -54,11 +54,11 @@ final class Url extends Type
 	 */
 	public function convertToPHPValue($value, AbstractPlatform $platform): ?UrlObject
 	{
-		if (!$value) {
-			return null;
+		if ($value instanceof UrlObject) {
+			return $value;
 		}
 
-		return new UrlObject($value);
+		return $value ? new UrlObject($value) : null;
 	}
 
 }
