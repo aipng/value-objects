@@ -5,7 +5,7 @@
 	"keywords": [
 		"value objects"
 	],
-	"license": "BSD",
+	"license": "MIT",
 	"minimum-stability": "stable",
 	"authors": [
 		{
