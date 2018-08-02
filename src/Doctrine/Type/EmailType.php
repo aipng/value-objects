@@ -8,7 +8,7 @@ use AipNg\ValueObjects\Web\Email as EmailObject;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 
-final class Email extends Type
+final class EmailType extends Type
 {
 
 	private const NAME = 'email';

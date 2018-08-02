@@ -4,13 +4,13 @@ declare(strict_types = 1);
 
 namespace AipNg\ValueObjectsTests\Doctrine\Type;
 
-use AipNg\ValueObjects\Doctrine\Type\Email as EmailType;
+use AipNg\ValueObjects\Doctrine\Type\EmailType;
 use AipNg\ValueObjects\Web\Email;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
 
-final class EmailTest extends TestCase
+final class EmailTypeTest extends TestCase
 {
 
 	private const EMAIL = 'test@example.org';

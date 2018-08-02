@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace AipNg\ValueObjects\Doctrine\Type;
 
-use AipNg\ValueObjects\Web\Url as UrlObject;
+use AipNg\ValueObjects\Web\Url;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 
-final class Url extends Type
+final class UrlType extends Type
 {
 
 	private const NAME = 'url';
@@ -52,13 +52,13 @@ final class Url extends Type
 	 *
 	 * @throws \AipNg\ValueObjects\InvalidArgumentException
 	 */
-	public function convertToPHPValue($value, AbstractPlatform $platform): ?UrlObject
+	public function convertToPHPValue($value, AbstractPlatform $platform): ?Url
 	{
-		if ($value instanceof UrlObject) {
+		if ($value instanceof Url) {
 			return $value;
 		}
 
-		return $value ? new UrlObject($value) : null;
+		return $value ? new Url($value) : null;
 	}
 
 }

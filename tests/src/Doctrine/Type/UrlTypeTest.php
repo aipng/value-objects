@@ -4,13 +4,13 @@ declare(strict_types = 1);
 
 namespace AipNg\ValueObjectsTests\Doctrine\Type;
 
-use AipNg\ValueObjects\Doctrine\Type\Url as UrlType;
+use AipNg\ValueObjects\Doctrine\Type\UrlType;
 use AipNg\ValueObjects\Web\Url;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
 
-final class UrlTest extends TestCase
+final class UrlTypeTest extends TestCase
 {
 
 	private const URL = 'http://example.org';
