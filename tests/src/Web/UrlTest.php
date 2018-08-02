@@ -48,7 +48,7 @@ final class UrlTest extends TestCase
 
 
 	/**
-	 * @return string[]
+	 * @return mixed[]
 	 */
 	public function getNormalizeUrlTestData(): array
 	{

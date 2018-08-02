@@ -30,8 +30,8 @@ final class StringNormalizerTest extends TestCase
 		$this->assertSame(1, StringNormalizer::normalize(1));
 		$this->assertSame(0, StringNormalizer::normalize(0));
 		$this->assertSame('string', StringNormalizer::normalize('string'));
-		$this->assertSame(true, StringNormalizer::normalize(true));
-		$this->assertSame(false, StringNormalizer::normalize(false));
+		$this->assertTrue(StringNormalizer::normalize(true));
+		$this->assertFalse(StringNormalizer::normalize(false));
 	}
 
 

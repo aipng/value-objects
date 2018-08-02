@@ -7,6 +7,7 @@ namespace AipNg\ValueObjectsTests\Doctrine\Type;
 use AipNg\ValueObjects\Doctrine\Type\Url as UrlType;
 use AipNg\ValueObjects\Web\Url;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
 
 final class UrlTest extends TestCase
@@ -14,31 +15,12 @@ final class UrlTest extends TestCase
 
 	private const URL = 'http://example.org';
 
-	/** @var \Mockery\MockInterface|\Doctrine\DBAL\Platforms\AbstractPlatform */
-	private $platform;
-
-	/** @var \AipNg\ValueObjects\Doctrine\Type\Url */
-	private $urlDatabaseType;
-
-
-	protected function setUp(): void
-	{
-		parent::setUp();
-		$this->platform = \Mockery::mock(AbstractPlatform::class);
-
-		if (!UrlType::hasType('url')) {
-			UrlType::addType('url', UrlType::class);
-		}
-
-		$this->urlDatabaseType = UrlType::getType('url');
-	}
-
 
 	public function testConvertToDatabaseValue(): void
 	{
 		$url = new Url(self::URL);
 
-		$databaseValue = $this->urlDatabaseType->convertToDatabaseValue($url, $this->platform);
+		$databaseValue = $this->getUrlDatabaseType()->convertToDatabaseValue($url, $this->createTestPlatform());
 
 		$this->assertSame($url->getValue(), $databaseValue);
 	}
@@ -46,15 +28,15 @@ final class UrlTest extends TestCase
 
 	public function testConvertNullToDatabaseValue(): void
 	{
-		$this->assertNull($this->urlDatabaseType->convertToDatabaseValue(null, $this->platform));
+		$this->assertNull($this->getUrlDatabaseType()->convertToDatabaseValue(null, $this->createTestPlatform()));
 	}
 
 
 	public function testConvertNullToPHPValue(): void
 	{
-		$phpValue = $this->urlDatabaseType->convertToPHPValue(null, $this->platform);
+		$phpValue = $this->getUrlDatabaseType()->convertToPHPValue(null, $this->createTestPlatform());
 
-		$this->assertSame(null, $phpValue);
+		$this->assertNull($phpValue);
 	}
 
 
@@ -62,7 +44,7 @@ final class UrlTest extends TestCase
 	{
 		$textUrl = self::URL;
 
-		$urlObject = $this->urlDatabaseType->convertToPHPValue($textUrl, $this->platform);
+		$urlObject = $this->getUrlDatabaseType()->convertToPHPValue($textUrl, $this->createTestPlatform());
 
 		$this->assertInstanceOf(Url::class, $urlObject);
 		$this->assertSame($textUrl, $urlObject->getValue());
@@ -73,9 +55,28 @@ final class UrlTest extends TestCase
 	{
 		$url = new Url(self::URL);
 
-		$urlObject = $this->urlDatabaseType->convertToPHPValue($url, $this->platform);
+		$urlObject = $this->getUrlDatabaseType()->convertToPHPValue($url, $this->createTestPlatform());
 
 		$this->assertSame($url, $urlObject);
+	}
+
+
+	private function getUrlDatabaseType(): Type
+	{
+		if (!UrlType::hasType('url')) {
+			UrlType::addType('url', UrlType::class);
+		}
+
+		return UrlType::getType('url');
+	}
+
+
+	private function createTestPlatform(): AbstractPlatform
+	{
+		/** @var \Doctrine\DBAL\Platforms\AbstractPlatform $mock */
+		$mock = \Mockery::mock(AbstractPlatform::class);
+
+		return $mock;
 	}
 
 }

@@ -7,6 +7,7 @@ namespace AipNg\ValueObjectsTests\Doctrine\Type;
 use AipNg\ValueObjects\Doctrine\Type\Email as EmailType;
 use AipNg\ValueObjects\Web\Email;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
 
 final class EmailTest extends TestCase
@@ -14,31 +15,12 @@ final class EmailTest extends TestCase
 
 	private const EMAIL = 'test@example.org';
 
-	/** @var \Mockery\MockInterface|\Doctrine\DBAL\Platforms\AbstractPlatform */
-	private $platform;
-
-	/** @var \AipNg\ValueObjects\Doctrine\Type\Email */
-	private $emailDatabaseType;
-
-
-	protected function setUp(): void
-	{
-		parent::setUp();
-		$this->platform = \Mockery::mock(AbstractPlatform::class);
-
-		if (!EmailType::hasType('email')) {
-			EmailType::addType('email', EmailType::class);
-		}
-
-		$this->emailDatabaseType = EmailType::getType('email');
-	}
-
 
 	public function testConvertToDatabaseValue(): void
 	{
 		$email = new Email(self::EMAIL);
 
-		$databaseValue = $this->emailDatabaseType->convertToDatabaseValue($email, $this->platform);
+		$databaseValue = $this->getEmailDatabaseType()->convertToDatabaseValue($email, $this->createTestPlatform());
 
 		$this->assertSame($email->getValue(), $databaseValue);
 	}
@@ -46,15 +28,15 @@ final class EmailTest extends TestCase
 
 	public function testConvertNullToDatabaseValue(): void
 	{
-		$this->assertNull($this->emailDatabaseType->convertToDatabaseValue(null, $this->platform));
+		$this->assertNull($this->getEmailDatabaseType()->convertToDatabaseValue(null, $this->createTestPlatform()));
 	}
 
 
 	public function testConvertNullToPHPValue(): void
 	{
-		$phpValue = $this->emailDatabaseType->convertToPHPValue(null, $this->platform);
+		$phpValue = $this->getEmailDatabaseType()->convertToPHPValue(null, $this->createTestPlatform());
 
-		$this->assertSame(null, $phpValue);
+		$this->assertNull($phpValue);
 	}
 
 
@@ -62,7 +44,7 @@ final class EmailTest extends TestCase
 	{
 		$textEmail = self::EMAIL;
 
-		$emailObject = $this->emailDatabaseType->convertToPHPValue($textEmail, $this->platform);
+		$emailObject = $this->getEmailDatabaseType()->convertToPHPValue($textEmail, $this->createTestPlatform());
 
 		$this->assertInstanceOf(Email::class, $emailObject);
 		$this->assertSame($textEmail, $emailObject->getValue());
@@ -73,9 +55,28 @@ final class EmailTest extends TestCase
 	{
 		$email = new Email(self::EMAIL);
 
-		$emailObject = $this->emailDatabaseType->convertToPHPValue($email, $this->platform);
+		$emailObject = $this->getEmailDatabaseType()->convertToPHPValue($email, $this->createTestPlatform());
 
 		$this->assertSame($email, $emailObject);
+	}
+
+
+	private function getEmailDatabaseType(): Type
+	{
+		if (!EmailType::hasType('email')) {
+			EmailType::addType('email', EmailType::class);
+		}
+
+		return EmailType::getType('email');
+	}
+
+
+	private function createTestPlatform(): AbstractPlatform
+	{
+		/** @var \Doctrine\DBAL\Platforms\AbstractPlatform $mock */
+		$mock = \Mockery::mock(AbstractPlatform::class);
+
+		return $mock;
 	}
 
 }
