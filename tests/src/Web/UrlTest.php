@@ -47,8 +47,15 @@ final class UrlTest extends TestCase
 		return [
 			['  ' . self::URL . '  '],
 			["\t" . self::URL . "\r\n\n"],
-			[strtoupper(self::URL)],
 		];
+	}
+
+
+	public function testUrlIsCaseSensitive(): void
+	{
+		$url = 'http://aip.cz/This-is-OK/';
+
+		$this->assertTrue((new Url($url))->equalsValue($url));
 	}
 
 

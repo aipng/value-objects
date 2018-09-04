@@ -7,7 +7,6 @@ namespace AipNg\ValueObjects\Web;
 use AipNg\ValueObjects\Common\StringBasedObject;
 use AipNg\ValueObjects\Helpers\StringNormalizer;
 use AipNg\ValueObjects\InvalidArgumentException;
-use Nette\Utils\Strings;
 use Nette\Utils\Validators;
 
 final class Url extends StringBasedObject
@@ -27,7 +26,7 @@ final class Url extends StringBasedObject
 			));
 		}
 
-		$this->value = Strings::lower($value);
+		$this->value = $value;
 	}
 
 }
