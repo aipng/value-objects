@@ -16,10 +16,7 @@
 	"autoload": {
 		"psr-4": {
 			"AipNg\\ValueObjects\\": "src/"
-		},
-		"classmap": [
-			"src/Exceptions/"
-		]
+		}
 	},
 	"require": {
 		"php": ">= 7.1",
