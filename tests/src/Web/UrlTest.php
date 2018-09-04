@@ -31,11 +31,24 @@ final class UrlTest extends TestCase
 
 
 	/**
-	 * @dataProvider getNormalizeUrlTestData
+	 * @dataProvider getNormalizeUrlData
 	 */
 	public function testNormalizeUrl(string $url): void
 	{
 		$this->assertSame(self::URL, (new Url($url))->getValue());
+	}
+
+
+	/**
+	 * @return mixed[]
+	 */
+	public function getNormalizeUrlData(): array
+	{
+		return [
+			['  ' . self::URL . '  '],
+			["\t" . self::URL . "\r\n\n"],
+			[strtoupper(self::URL)],
+		];
 	}
 
 
@@ -44,19 +57,6 @@ final class UrlTest extends TestCase
 		$this->expectException(InvalidArgumentException::class);
 
 		new Url('');
-	}
-
-
-	/**
-	 * @return mixed[]
-	 */
-	public function getNormalizeUrlTestData(): array
-	{
-		return [
-			['  ' . self::URL . '  '],
-			["\t" . self::URL . "\r\n\n"],
-			[strtoupper(self::URL)],
-		];
 	}
 
 }
