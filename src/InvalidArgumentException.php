@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace AipNg\ValueObjects;
 
-class InvalidArgumentException extends \InvalidArgumentException implements Exception
+final class InvalidArgumentException extends \Exception implements Exception
 {
 
 }
