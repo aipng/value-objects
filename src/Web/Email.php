@@ -16,18 +16,18 @@ final class Email extends StringBasedObject
 	/**
 	 * @throws \AipNg\ValueObjects\InvalidArgumentException
 	 */
-	public function __construct(string $value)
+	public function __construct(string $input)
 	{
-		$value = StringNormalizer::normalizeMandatory($value);
+		$input = StringNormalizer::normalize($input);
 
-		if (!Validators::isEmail($value)) {
+		if ($input === null || !Validators::isEmail($input)) {
 			throw new InvalidArgumentException(sprintf(
 				'\'%s\' is not a valid e-mail address!',
-				$value
+				$input
 			));
 		}
 
-		$this->value = Strings::lower($value);
+		$this->value = Strings::lower($input);
 	}
 
 }

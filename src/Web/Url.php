@@ -15,18 +15,18 @@ final class Url extends StringBasedObject
 	/**
 	 * @throws \AipNg\ValueObjects\InvalidArgumentException
 	 */
-	public function __construct(string $value)
+	public function __construct(string $input)
 	{
-		$value = StringNormalizer::normalizeMandatory($value);
+		$input = StringNormalizer::normalize($input);
 
-		if (!Validators::isUrl($value)) {
+		if ($input === null || !Validators::isUrl($input)) {
 			throw new InvalidArgumentException(sprintf(
 				'\'%s\' is not a valid URL!',
-				$value
+				$input
 			));
 		}
 
-		$this->value = $value;
+		$this->value = $input;
 	}
 
 }

@@ -8,66 +8,21 @@ final class StringNormalizer
 {
 
 	/**
-	 * Normalizes empty strings in input to null value
-	 *
-	 * @param mixed $value
-	 *
-	 * @return mixed|null
+	 * Trims input and normalizes empty strings to null
 	 */
-	public static function normalize($value)
+	public static function normalize(?string $input): ?string
 	{
-		if (!is_string($value)) {
-			return $value;
+		if ($input === null) {
+			return null;
 		}
 
-		return self::normalizeString($value);
+		return self::trim($input) ?: null;
 	}
 
 
-	/**
-	 * @param mixed $value
-	 *
-	 * @return mixed
-	 */
-	public static function normalizeRecursive($value)
+	private static function trim(string $input): string
 	{
-		if (!is_array($value)) {
-			return self::normalize($value);
-		}
-
-		return array_map(function ($v) {
-			return self::normalizeRecursive($v);
-		}, $value);
-	}
-
-
-	/**
-	 * @param mixed $value
-	 * @param string $message
-	 *
-	 * @return mixed
-	 *
-	 * @throws \AipNg\ValueObjects\InvalidArgumentException
-	 */
-	public static function normalizeMandatory($value, string $message = 'Mandatory value, must be filled!')
-	{
-		if (!is_string($value)) {
-			return $value;
-		}
-
-		$value = self::normalizeString($value);
-
-		if (!$value) {
-			throw new \AipNg\ValueObjects\InvalidArgumentException($message);
-		}
-
-		return $value;
-	}
-
-
-	private static function normalizeString(string $string): ?string
-	{
-		return trim($string) ?: null;
+		return trim($input, " \t\n\r\0\x0B\xC2\xA0");
 	}
 
 }
