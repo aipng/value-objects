@@ -15,10 +15,17 @@ final class EmailTest extends TestCase
 	private const EMAIL = 'test+test@example.org';
 
 
-	public function testValueObject(): void
+	public function testEmailIsCaseSensitive(): void
 	{
-		$email = new Email(self::EMAIL);
+		$email = 'Example@example.org';
 
+		$this->assertSame($email, (new Email($email))->getValue());
+	}
+
+
+	public function testLowerConstructor(): void
+	{
+		$email = Email::lower(strtoupper(self::EMAIL));
 		$this->assertSame(self::EMAIL, $email->getValue());
 	}
 
@@ -27,7 +34,7 @@ final class EmailTest extends TestCase
 	{
 		$this->expectException(InvalidArgumentException::class);
 
-		new Email('');
+		new Email('  ');
 	}
 
 
@@ -40,7 +47,6 @@ final class EmailTest extends TestCase
 	public function testNormalizeEmailAddress(): void
 	{
 		$this->assertSame(self::EMAIL, (string) new Email('  ' . self::EMAIL . '  '));
-		$this->assertSame(self::EMAIL, (string) new Email(strtoupper(self::EMAIL)));
 	}
 
 

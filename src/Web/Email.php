@@ -27,7 +27,16 @@ final class Email extends StringBasedObject
 			));
 		}
 
-		$this->value = Strings::lower($input);
+		$this->value = $input;
+	}
+
+
+	/**
+	 * @throws \AipNg\ValueObjects\InvalidArgumentException
+	 */
+	public static function lower(string $input): self
+	{
+		return new self(Strings::lower($input));
 	}
 
 }
