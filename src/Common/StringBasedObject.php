@@ -25,6 +25,9 @@ abstract class StringBasedObject
 	}
 
 
+	/**
+	 * @throws \AipNg\ValueObjects\InvalidArgumentException
+	 */
 	public function equals(self $object): bool
 	{
 		if (get_class($this) !== get_class($object)) {
