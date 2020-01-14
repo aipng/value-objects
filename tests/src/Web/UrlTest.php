@@ -16,7 +16,7 @@ final class UrlTest extends TestCase
 
 	public function testCreation(): void
 	{
-		$url = new Url(self::URL);
+		$url = Url::from(self::URL);
 
 		$this->assertSame(self::URL, $url->getValue());
 	}
@@ -24,7 +24,7 @@ final class UrlTest extends TestCase
 
 	public function testToString(): void
 	{
-		$url = new Url(self::URL);
+		$url = Url::from(self::URL);
 
 		$this->assertSame(self::URL, (string) $url);
 	}
@@ -35,7 +35,7 @@ final class UrlTest extends TestCase
 	 */
 	public function testNormalizeUrl(string $url): void
 	{
-		$this->assertSame(self::URL, (new Url($url))->getValue());
+		$this->assertSame(self::URL, (Url::from($url))->getValue());
 	}
 
 
@@ -55,7 +55,7 @@ final class UrlTest extends TestCase
 	{
 		$url = 'http://aip.cz/This-is-OK/';
 
-		$this->assertTrue((new Url($url))->equalsValue($url));
+		$this->assertTrue((Url::from($url))->equalsValue($url));
 	}
 
 
@@ -63,7 +63,7 @@ final class UrlTest extends TestCase
 	{
 		$this->expectException(InvalidArgumentException::class);
 
-		new Url('');
+		Url::from('');
 	}
 
 }

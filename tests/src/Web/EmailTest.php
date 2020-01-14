@@ -15,17 +15,9 @@ final class EmailTest extends TestCase
 	private const EMAIL = 'test+test@example.org';
 
 
-	public function testEmailIsCaseSensitive(): void
+	public function testFromConstructor(): void
 	{
-		$email = 'Example@example.org';
-
-		$this->assertSame($email, (new Email($email))->getValue());
-	}
-
-
-	public function testLowerConstructor(): void
-	{
-		$email = Email::lower(strtoupper(self::EMAIL));
+		$email = Email::from(strtoupper(self::EMAIL));
 		$this->assertSame(self::EMAIL, $email->getValue());
 	}
 
@@ -34,27 +26,27 @@ final class EmailTest extends TestCase
 	{
 		$this->expectException(InvalidArgumentException::class);
 
-		new Email('  ');
+		Email::from('  ');
 	}
 
 
 	public function testToString(): void
 	{
-		$this->assertSame(self::EMAIL, (string) new Email(self::EMAIL));
+		$this->assertSame(self::EMAIL, (string) Email::from(self::EMAIL));
 	}
 
 
 	public function testNormalizeEmailAddress(): void
 	{
-		$this->assertSame(self::EMAIL, (string) new Email('  ' . self::EMAIL . '  '));
+		$this->assertSame(self::EMAIL, (string) Email::from('  ' . self::EMAIL . '  '));
 	}
 
 
 	public function testEquals(): void
 	{
-		$original = new Email(self::EMAIL);
-		$copy = new Email(self::EMAIL);
-		$different = new Email('diff@example.org');
+		$original = Email::from(self::EMAIL);
+		$copy = Email::from(self::EMAIL);
+		$different = Email::from('diff@example.org');
 
 		$this->assertTrue($original->equals($original));
 		$this->assertTrue($original->equals($copy));
@@ -66,13 +58,13 @@ final class EmailTest extends TestCase
 	{
 		$this->expectException(InvalidArgumentException::class);
 
-		(new Email(self::EMAIL))->equals(new Url('http://example.org'));
+		(Email::from(self::EMAIL))->equals(new Url('http://example.org'));
 	}
 
 
 	public function testEqualsValue(): void
 	{
-		$this->assertTrue((new Email(self::EMAIL))->equalsValue(self::EMAIL));
+		$this->assertTrue((Email::from(self::EMAIL))->equalsValue(self::EMAIL));
 	}
 
 }

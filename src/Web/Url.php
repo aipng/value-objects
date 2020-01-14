@@ -29,4 +29,13 @@ final class Url extends StringBasedObject
 		$this->value = $input;
 	}
 
+
+	/**
+	 * @throws \AipNg\ValueObjects\InvalidArgumentException
+	 */
+	public static function from(string $input): Url
+	{
+		return new self($input);
+	}
+
 }
