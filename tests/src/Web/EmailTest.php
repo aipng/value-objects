@@ -42,6 +42,22 @@ final class EmailTest extends TestCase
 	}
 
 
+	public function testGetUsername(): void
+	{
+		$email = Email::from(self::EMAIL);
+
+		$this->assertSame('test+test', $email->getUsername());
+	}
+
+
+	public function testGetDomain(): void
+	{
+		$email = Email::from(self::EMAIL);
+
+		$this->assertSame('example.org', $email->getDomain());
+	}
+
+
 	public function testEquals(): void
 	{
 		$original = Email::from(self::EMAIL);

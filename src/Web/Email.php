@@ -51,4 +51,20 @@ final class Email extends StringBasedObject
 		return self::from($input);
 	}
 
+
+	public function getUsername(): string
+	{
+		[$username] = \explode('@', $this->value);
+
+		return $username;
+	}
+
+
+	public function getDomain(): string
+	{
+		[, $domain] = \explode('@', $this->value);
+
+		return $domain;
+	}
+
 }
