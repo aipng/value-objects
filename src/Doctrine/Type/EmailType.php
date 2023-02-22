@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace AipNg\ValueObjects\Doctrine\Type;
 
-use AipNg\ValueObjects\Web\Email as EmailObject;
+use AipNg\ValueObjects\Web\Email;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 
@@ -14,15 +14,10 @@ final class EmailType extends Type
 	private const NAME = 'email';
 
 
-	/**
-	 * @param mixed[] $fieldDeclaration
-	 * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
-	 *
-	 * @return string
-	 */
-	public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
+	/** @inheritDoc */
+	public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
 	{
-		return $platform->getVarcharTypeDeclarationSQL($fieldDeclaration);
+		return $platform->getStringTypeDeclarationSQL($column);
 	}
 
 
@@ -32,33 +27,19 @@ final class EmailType extends Type
 	}
 
 
-	/**
-	 * @param mixed|\AipNg\ValueObjects\Web\Email $value
-	 * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
-	 *
-	 * @return string
-	 */
-	public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
+	public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): ?string
 	{
-		return $value ? $value->getValue() : null;
+		return $value instanceof Email ? $value->getValue() : null;
 	}
 
 
-	/**
-	 * @param mixed|string $value
-	 * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
-	 *
-	 * @return \AipNg\ValueObjects\Web\Email
-	 *
-	 * @throws \AipNg\ValueObjects\InvalidArgumentException
-	 */
-	public function convertToPHPValue($value, AbstractPlatform $platform): ?EmailObject
+	public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?Email
 	{
-		if ($value instanceof EmailObject) {
+		if ($value instanceof Email) {
 			return $value;
 		}
 
-		return $value ? new EmailObject($value) : null;
+		return is_string($value) ? new Email($value) : null;
 	}
 
 }

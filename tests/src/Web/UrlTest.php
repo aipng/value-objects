@@ -6,56 +6,52 @@ namespace AipNg\ValueObjectsTests\Web;
 
 use AipNg\ValueObjects\InvalidArgumentException;
 use AipNg\ValueObjects\Web\Url;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class UrlTest extends TestCase
 {
 
-	private const URL = 'http://www.example.org';
-
-
 	public function testCreation(): void
 	{
-		$url = Url::from(self::URL);
+		$url = Url::from('https://www.example.org');
 
-		$this->assertSame(self::URL, $url->getValue());
+		$this->assertSame('https://www.example.org', $url->getValue());
 	}
 
 
 	public function testToString(): void
 	{
-		$url = Url::from(self::URL);
+		$url = Url::from('https://www.example.org');
 
-		$this->assertSame(self::URL, (string) $url);
+		$this->assertSame('https://www.example.org', (string) $url);
 	}
 
 
-	/**
-	 * @dataProvider getNormalizeUrlData
-	 */
+	#[DataProvider('getNormalizeUrlData')]
 	public function testNormalizeUrl(string $url): void
 	{
-		$this->assertSame(self::URL, (Url::from($url))->getValue());
+		$this->assertSame('https://www.example.org', Url::from($url)->getValue());
 	}
 
 
 	/**
-	 * @return mixed[]
+	 * @return array<array<int, string>>
 	 */
-	public function getNormalizeUrlData(): array
+	public static function getNormalizeUrlData(): array
 	{
 		return [
-			['  ' . self::URL . '  '],
-			["\t" . self::URL . "\r\n\n"],
+			['  https://www.example.org  '],
+			["\thttps://www.example.org\r\n\n"],
 		];
 	}
 
 
 	public function testUrlIsCaseSensitive(): void
 	{
-		$url = 'http://aip.cz/This-is-OK/';
+		$url = 'https://aip.cz/This-is-OK/';
 
-		$this->assertTrue((Url::from($url))->equalsValue($url));
+		$this->assertTrue(Url::from($url)->equalsValue($url));
 	}
 
 

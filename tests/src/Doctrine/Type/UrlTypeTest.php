@@ -13,49 +13,56 @@ use PHPUnit\Framework\TestCase;
 final class UrlTypeTest extends TestCase
 {
 
-	private const URL = 'http://example.org';
+	/** @var \Doctrine\DBAL\Platforms\AbstractPlatform&\PHPUnit\Framework\MockObject\MockObject */
+	private AbstractPlatform $platform;
 
 
-	public function testConvertToDatabaseValue(): void
+	protected function setUp(): void
 	{
-		$url = new Url(self::URL);
+		$this->platform = $this->getMockBuilder(AbstractPlatform::class)->getMock();
+	}
 
-		$databaseValue = $this->getUrlDatabaseType()->convertToDatabaseValue($url, $this->createTestPlatform());
+
+	public function testShouldConvertToDatabaseValue(): void
+	{
+		$url = new Url('https://example.org');
+
+		$databaseValue = $this->getUrlDatabaseType()->convertToDatabaseValue($url, $this->platform);
 
 		$this->assertSame($url->getValue(), $databaseValue);
 	}
 
 
-	public function testConvertNullToDatabaseValue(): void
+	public function testShouldConvertNullToDatabaseValue(): void
 	{
-		$this->assertNull($this->getUrlDatabaseType()->convertToDatabaseValue(null, $this->createTestPlatform()));
+		$this->assertNull($this->getUrlDatabaseType()->convertToDatabaseValue(null, $this->platform));
 	}
 
 
-	public function testConvertNullToPHPValue(): void
+	public function testShouldConvertNullToPHPValue(): void
 	{
-		$phpValue = $this->getUrlDatabaseType()->convertToPHPValue(null, $this->createTestPlatform());
+		$phpValue = $this->getUrlDatabaseType()->convertToPHPValue(null, $this->platform);
 
 		$this->assertNull($phpValue);
 	}
 
 
-	public function testConvertUrlToPHPValue(): void
+	public function testShouldConvertUrlToPHPValue(): void
 	{
-		$textUrl = self::URL;
+		$textUrl = 'https://example.org';
 
-		$urlObject = $this->getUrlDatabaseType()->convertToPHPValue($textUrl, $this->createTestPlatform());
+		$urlObject = $this->getUrlDatabaseType()->convertToPHPValue($textUrl, $this->platform);
 
 		$this->assertInstanceOf(Url::class, $urlObject);
 		$this->assertSame($textUrl, $urlObject->getValue());
 	}
 
 
-	public function testConvertInstanceToPHPValue(): void
+	public function testShouldConvertInstanceToPHPValue(): void
 	{
-		$url = new Url(self::URL);
+		$url = new Url('https://example.org');
 
-		$urlObject = $this->getUrlDatabaseType()->convertToPHPValue($url, $this->createTestPlatform());
+		$urlObject = $this->getUrlDatabaseType()->convertToPHPValue($url, $this->platform);
 
 		$this->assertSame($url, $urlObject);
 	}
@@ -68,15 +75,6 @@ final class UrlTypeTest extends TestCase
 		}
 
 		return UrlType::getType('url');
-	}
-
-
-	private function createTestPlatform(): AbstractPlatform
-	{
-		/** @var \Doctrine\DBAL\Platforms\AbstractPlatform $mock */
-		$mock = \Mockery::mock(AbstractPlatform::class);
-
-		return $mock;
 	}
 
 }

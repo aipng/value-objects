@@ -12,13 +12,10 @@ use PHPUnit\Framework\TestCase;
 final class EmailTest extends TestCase
 {
 
-	private const EMAIL = 'test+test@example.org';
-
-
 	public function testFromConstructor(): void
 	{
-		$email = Email::from(strtoupper(self::EMAIL));
-		$this->assertSame(self::EMAIL, $email->getValue());
+		$email = Email::from(strtoupper('test+test@example.org'));
+		$this->assertSame('test+test@example.org', $email->getValue());
 	}
 
 
@@ -32,19 +29,19 @@ final class EmailTest extends TestCase
 
 	public function testToString(): void
 	{
-		$this->assertSame(self::EMAIL, (string) Email::from(self::EMAIL));
+		$this->assertSame('test+test@example.org', (string) Email::from('test+test@example.org'));
 	}
 
 
 	public function testNormalizeEmailAddress(): void
 	{
-		$this->assertSame(self::EMAIL, (string) Email::from('  ' . self::EMAIL . '  '));
+		$this->assertSame('test+test@example.org', Email::from('  test+test@example.org  ')->getValue());
 	}
 
 
 	public function testGetUsername(): void
 	{
-		$email = Email::from(self::EMAIL);
+		$email = Email::from('test+test@example.org');
 
 		$this->assertSame('test+test', $email->getUsername());
 	}
@@ -52,7 +49,7 @@ final class EmailTest extends TestCase
 
 	public function testGetDomain(): void
 	{
-		$email = Email::from(self::EMAIL);
+		$email = Email::from('test+test@example.org');
 
 		$this->assertSame('example.org', $email->getDomain());
 	}
@@ -60,8 +57,8 @@ final class EmailTest extends TestCase
 
 	public function testEquals(): void
 	{
-		$original = Email::from(self::EMAIL);
-		$copy = Email::from(self::EMAIL);
+		$original = Email::from('test+test@example.org');
+		$copy = Email::from('test+test@example.org');
 		$different = Email::from('diff@example.org');
 
 		$this->assertTrue($original->equals($original));
@@ -74,13 +71,13 @@ final class EmailTest extends TestCase
 	{
 		$this->expectException(InvalidArgumentException::class);
 
-		(Email::from(self::EMAIL))->equals(new Url('http://example.org'));
+		Email::from('test+test@example.org')->equals(new Url('https://example.org'));
 	}
 
 
 	public function testEqualsValue(): void
 	{
-		$this->assertTrue((Email::from(self::EMAIL))->equalsValue(self::EMAIL));
+		$this->assertTrue(Email::from('test+test@example.org')->equalsValue('test+test@example.org'));
 	}
 
 }

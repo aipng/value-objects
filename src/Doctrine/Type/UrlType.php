@@ -15,14 +15,14 @@ final class UrlType extends Type
 
 
 	/**
-	 * @param mixed[] $fieldDeclaration
+	 * @param mixed[] $column
 	 * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
 	 *
 	 * @return string
 	 */
-	public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
+	public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
 	{
-		return $platform->getVarcharTypeDeclarationSQL($fieldDeclaration);
+		return $platform->getStringTypeDeclarationSQL($column);
 	}
 
 
@@ -32,33 +32,19 @@ final class UrlType extends Type
 	}
 
 
-	/**
-	 * @param mixed|\AipNg\ValueObjects\Web\Url $value
-	 * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
-	 *
-	 * @return string
-	 */
-	public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
+	public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): ?string
 	{
-		return $value ? $value->getValue() : null;
+		return $value instanceof Url ? $value->getValue() : null;
 	}
 
 
-	/**
-	 * @param mixed|string $value
-	 * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
-	 *
-	 * @return \AipNg\ValueObjects\Web\Url
-	 *
-	 * @throws \AipNg\ValueObjects\InvalidArgumentException
-	 */
-	public function convertToPHPValue($value, AbstractPlatform $platform): ?Url
+	public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?Url
 	{
 		if ($value instanceof Url) {
 			return $value;
 		}
 
-		return $value ? new Url($value) : null;
+		return is_string($value) ? new Url($value) : null;
 	}
 
 }
