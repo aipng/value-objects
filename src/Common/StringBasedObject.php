@@ -9,8 +9,7 @@ use AipNg\ValueObjects\InvalidArgumentException;
 abstract class StringBasedObject
 {
 
-	/** @var string */
-	protected $value;
+	protected string $value;
 
 
 	public function getValue(): string
