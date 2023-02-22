@@ -3,15 +3,21 @@ name: Code Style
 on: [push, pull_request]
 
 jobs:
-  PHP_CodeSniffer:
+  phpcs:
     name: Coding Standard
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: shivammathur/setup-php@v2
+      - name: "Checkout"
+        uses: actions/checkout@v3
+
+      - name: "Install PHP"
+        uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
           coverage: none
 
-      - run: composer create-project aipng/coding-standard temp/coding-standard --no-progress
-      - run: php temp/coding-standard/phpcs --report-full --report-summary
+      - name: "Install dependencies"
+        run: composer create-project aipng/coding-standard temp/coding-standard --no-interaction --no-progress
+
+      - name: "Check code style"
+        run: php temp/coding-standard/phpcs --report-full --report-summary
