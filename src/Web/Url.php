@@ -22,7 +22,7 @@ final class Url extends StringBasedObject
 		if ($input === null || !Validators::isUrl($input)) {
 			throw new InvalidArgumentException(sprintf(
 				'\'%s\' is not a valid URL!',
-				$input
+				$input,
 			));
 		}
 

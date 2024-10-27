@@ -23,7 +23,7 @@ final class Email extends StringBasedObject
 		if ($input === null || !Validators::isEmail($input)) {
 			throw new InvalidArgumentException(sprintf(
 				'\'%s\' is not a valid e-mail address!',
-				$input
+				$input,
 			));
 		}
 
