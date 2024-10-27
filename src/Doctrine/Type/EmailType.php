@@ -11,7 +11,7 @@ use Doctrine\DBAL\Types\Type;
 final class EmailType extends Type
 {
 
-	private const NAME = 'email';
+	private const string NAME = 'email';
 
 
 	/** @inheritDoc */

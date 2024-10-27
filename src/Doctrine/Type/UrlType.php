@@ -11,7 +11,7 @@ use Doctrine\DBAL\Types\Type;
 final class UrlType extends Type
 {
 
-	private const NAME = 'url';
+	private const string NAME = 'url';
 
 
 	/**
